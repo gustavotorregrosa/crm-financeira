@@ -13,10 +13,24 @@ class PopulaPerfil extends Migration
      */
     public function up()
     {
-        App\Perfil::create(['nome' => 'Padrão']);
-        App\Perfil::create(['nome' => 'Operador']);
-        App\Perfil::create(['nome' => 'Supervisor']);
-        App\Perfil::create(['nome' => 'Administrador']);
+
+        $perfil = new App\Perfil;
+        $perfil->nome = 'Padrão';
+        $perfil->save();
+
+        // $perfis = [
+        //     'Padrão',
+        //     'Operador',
+        //     'Supervisor',
+        //     'Administrador'
+        // ];
+
+        // foreach($perfis as $nome){
+        //     $perfil = new App\Perfil;
+        //     $perfil->nome = $nome;
+        //     $perfil->save();
+        // }
+
     }
 
     /**
