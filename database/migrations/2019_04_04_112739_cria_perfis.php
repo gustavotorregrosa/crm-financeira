@@ -14,7 +14,7 @@ class CriaPerfis extends Migration
     public function up()
     {
         Schema::create('perfil', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->string('nome');
             $table->timestamps();
             $table->softDeletes();

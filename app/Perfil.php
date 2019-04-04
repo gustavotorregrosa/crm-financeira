@@ -9,6 +9,7 @@ class Perfil extends Model
 {
     use SoftDeletes;
     protected $table = 'perfil';
+    protected $primaryKey = 'id';
     protected $fillable = 'nome';
-    protected $guarded = [];
+    
 }
