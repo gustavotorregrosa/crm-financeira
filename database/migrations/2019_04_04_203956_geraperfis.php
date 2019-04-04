@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddColPerfilNoUser extends Migration
+class Geraperfis extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,18 @@ class AddColPerfilNoUser extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->integer('perfil')->unsigned()->default('1')->after('active');
-            $table->foreign('perfil')->references('id')->on('perfil');
-        });
+     
+        $perfis = [
+            'Analista',
+            'Operador',
+            'Supervisor',
+            'Administrador'
+        ];
+
+        foreach ($perfis as $perfil) {
+            App\Perfil::create(['nome' => $perfil]);
+        }
+
     }
 
     /**
@@ -26,8 +34,6 @@ class AddColPerfilNoUser extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-            //
-        });
+        //
     }
 }
