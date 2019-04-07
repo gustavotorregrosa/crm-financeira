@@ -23,6 +23,34 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $usuario = \Auth::user();
+        $perfil = $usuario->perfilUsuario->nome;
+        $novaurl = "";
+
+        $permissoes = [
+            'analista',
+            'operador',
+            'supervisor',
+            'administrador'
+        ];
+
+        if(in_array($perfil, $permissoes)){
+            $novaurl = $perfil;
+        }else{
+            \Session::put('erro', 'usuario sem perfil 2');
+            $novaurl = 'mensagens';
+        }
+
+        
+        return redirect('/'.$novaurl);
     }
+
+    public function mensagens(){
+        $dados = [
+            'mensagens' =>  \Session::get('erro')
+        ];
+        \Session::flush('erro');
+        return view('login.mensagens', $dados);
+    }
+
 }

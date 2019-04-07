@@ -17,8 +17,8 @@ if(version_compare(PHP_VERSION, '7.2.0', '>=')) {
 */
 
 Route::get('/', function () {
-    // return view('welcome');
-    return view('login.index');
+    return view('welcome');
+    // return view('login.index');
 });
 
 Route::get('/esqueci', function () {
@@ -29,3 +29,9 @@ Route::get('/esqueci', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/mensagens', 'HomeController@mensagens');
+
+Route::get('/logout', 'Auth\LoginController@logout');
+
+Route::get('/analista', 'AnalistaController@index');

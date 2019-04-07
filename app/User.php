@@ -21,6 +21,8 @@ class User extends Authenticatable
         'name', 'email', 'password', 'active'
     ];
 
+    protected $with = ['perfilUsuario'];
+
     /**
      * The attributes that should be hidden for arrays.
      *
@@ -38,4 +40,10 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
+    public function perfilUsuario(){
+        return $this->belongsTo('App\Perfil', 'perfil');
+    }
+
 }

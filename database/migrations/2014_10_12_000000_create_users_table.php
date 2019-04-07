@@ -20,8 +20,8 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->boolean('active')->default(true);
-            $table->bigInteger('userperfil')->unsigned()->nullable();
-            $table->foreign('userperfil')->references('id')->on('perfis');
+            $table->bigInteger('perfil')->unsigned()->nullable();
+            $table->foreign('perfil')->references('id')->on('perfis');
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();

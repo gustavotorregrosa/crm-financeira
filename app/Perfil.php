@@ -10,5 +10,10 @@ class Perfil extends Model
     use SoftDeletes;
     protected $table = 'perfis';
     protected $fillable = ['nome'];
+
+    public function getNomeAttribute($value)
+    {
+        return strtolower($value);
+    }
     
 }
