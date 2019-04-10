@@ -21,7 +21,11 @@ class User extends Authenticatable
         'name', 'email', 'password', 'active'
     ];
 
-    protected $with = ['perfilUsuario'];
+    protected $with = [
+        'perfilUsuario',
+        // 'supervisor',
+   
+    ];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -29,7 +33,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password', 'remember_token'
     ];
 
     /**
@@ -45,5 +49,25 @@ class User extends Authenticatable
     public function perfilUsuario(){
         return $this->belongsTo('App\Perfil', 'perfil');
     }
+
+    public function supervisor(){
+        return $this->belongsTo('App\User', 'supervisor');
+    }
+
+
+    // public function supervisionados($id = 0){
+    //     if($id == 0){
+    //         $id = $this->id;
+    //     }
+
+    //     $usuariosSubordinados = User::where('supervisor', $id)->get();
+    //     return $usuariosSubordinados;
+    // }
+   
+    public function supervisionados(){
+        return $this->hasMany('App\User', 'supervisor');
+    }
+
+
 
 }

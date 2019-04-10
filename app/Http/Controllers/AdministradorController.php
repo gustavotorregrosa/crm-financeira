@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AdministradorController extends Controller
 {
@@ -22,14 +23,30 @@ class AdministradorController extends Controller
         return view('administrador.index');
     }
 
+
+    public function ajaxUsuarios(){
+        
+        $usuarios = \App\User::with(['supervisionados', 'supervisor'])->get();
+        $dados['data'] = $usuarios;
+        return json_encode($dados);
+    }
+
+
     public function usuarios(){
 
         $dados = [
-            'usuarios' => \App\User::all()
+            'usuarios' => \App\User::with(['supervisionados', 'supervisor'])->get()
         ];
-
+   
         return view('administrador.usuarios', $dados);
     }
+
+
+    public function deletaUsuario(Request $request){
+        
+        
+    }
+
 
     /**
      * Show the form for creating a new resource.

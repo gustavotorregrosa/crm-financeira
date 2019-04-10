@@ -38,3 +38,6 @@ Route::get('/logout', 'Auth\LoginController@logout');
 
 Route::get('/administrador', 'AdministradorController@index');
 Route::get('/administrador/usuarios', 'AdministradorController@usuarios');
+Route::post('/administrador/usuariosjson', 'AdministradorController@ajaxUsuarios');
+
+Route::post('/deleta-usuario', 'AdministradorController@deletaUsuario');

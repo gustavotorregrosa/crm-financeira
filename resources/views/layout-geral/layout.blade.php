@@ -1,15 +1,24 @@
 <!doctype html>
 <html lang="en">
- 
+
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="{{asset('custom-assets/painel-geral/assets/vendor/bootstrap/css/bootstrap.min.css')}}">
     <link href="{{asset('custom-assets/painel-geral/assets/vendor/fonts/circular-std/style.css')}}" rel="stylesheet">
     <link rel="stylesheet" href="{{asset('custom-assets/painel-geral/assets/libs/css/style.css')}}">
     <link rel="stylesheet" href="{{asset('custom-assets/painel-geral/assets/vendor/fonts/fontawesome/css/fontawesome-all.css')}}">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.18/css/dataTables.bootstrap4.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.5.6/css/buttons.bootstrap4.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.2/css/responsive.bootstrap4.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/select/1.3.0/css/select.bootstrap4.css"/>
+    
+   
+
+    
 
     <title>@yield('titulo', 'CRM Financeira - Admin')</title>
 </head>
@@ -30,7 +39,9 @@
                 </button>
                 <div class="collapse navbar-collapse " id="navbarSupportedContent">
                     <ul class="navbar-nav ml-auto navbar-right-top">
-                        <li style="padding: 1.5em;"><p>{{ Auth::user()->name }}</p></li>
+                        <li style="padding: 1.5em;">
+                            <p>{{ Auth::user()->name }}</p>
+                        </li>
                         <li style="margin: 1em;"><button class="btn btn-success btn-sm">Logout</button></li>
                     </ul>
                 </div>
@@ -42,7 +53,7 @@
         <!-- ============================================================== -->
         <!-- left sidebar -->
         <!-- ============================================================== -->
-      
+
 
         @yield('barra-lateral')
         <!-- ============================================================== -->
@@ -61,8 +72,8 @@
                         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                             <div class="page-header">
                                 <h2 class="pageheader-title">
-                                @yield('titulo-pagina')        
-                                
+                                    @yield('titulo-pagina')
+
                                 </h2>
                             </div>
                         </div>
@@ -72,9 +83,9 @@
                     <!-- ============================================================== -->
                     <div class="ecommerce-widget">
 
-                    @yield('conteudo-principal')
+                        @yield('conteudo-principal')
 
-                      
+
                     </div>
                 </div>
             </div>
@@ -97,10 +108,28 @@
     <!-- main js -->
     <script src="{{asset('custom-assets/painel-geral/assets/libs/js/main-js.js')}}"></script>
     <!-- chart chartist js -->
-    
+
     <!-- sparkline js -->
     <script src="{{asset('custom-assets/painel-geral/assets/vendor/charts/sparkline/jquery.sparkline.js')}}"></script>
 
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap4.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.6/js/dataTables.buttons.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.bootstrap4.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.html5.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.2/js/dataTables.responsive.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/select/1.3.0/js/dataTables.select.js"></script>
+
+    <script>
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+    </script>
+
+    @yield('js-adicionais')
+
 </body>
- 
+
 </html>
