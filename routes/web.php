@@ -34,6 +34,6 @@ Route::get('/mensagens', 'HomeController@mensagens');
 
 Route::get('/logout', 'Auth\LoginController@logout');
 
-Route::get('/analista', 'AnalistaController@index');
+// Route::get('/analista', 'AnalistaController@index');
 
 Route::get('/administrador', 'AdministradorController@index');

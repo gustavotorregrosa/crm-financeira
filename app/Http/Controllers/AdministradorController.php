@@ -19,7 +19,7 @@ class AdministradorController extends Controller
      */
     public function index()
     {
-        dd("pagina do admin");
+        return view('administrador.index');
     }
 
     /**

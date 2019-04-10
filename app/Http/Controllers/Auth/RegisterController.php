@@ -69,4 +69,15 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
         ]);
     }
+
+    public function register(){
+        $this->middleware('auth');
+        $this->middleware('verificaperfil:administrador');
+    }
+
+    public function showRegistrationForm(){
+        $this->middleware('auth');
+        $this->middleware('verificaperfil:administrador');
+
+    }
 }
