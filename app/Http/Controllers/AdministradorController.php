@@ -22,6 +22,15 @@ class AdministradorController extends Controller
         return view('administrador.index');
     }
 
+    public function usuarios(){
+
+        $dados = [
+            'usuarios' => \App\User::all()
+        ];
+
+        return view('administrador.usuarios', $dados);
+    }
+
     /**
      * Show the form for creating a new resource.
      *

@@ -8,8 +8,8 @@
     @endcomponent
 @endsection
 
-@section('titulo-pagina', 'Painel Administrativo')
+@section('titulo-pagina', 'Gestão de usuários')
 
 @section('conteudo-principal')
-
+{{$usuarios}}
 @endsection
