@@ -33,18 +33,28 @@ class AdministradorController extends Controller
 
 
     public function usuarios(){
-
-        $dados = [
-            'usuarios' => \App\User::with(['supervisionados', 'supervisor'])->get()
-        ];
-   
-        return view('administrador.usuarios', $dados);
+        // $dados = [
+        //     'usuarios' => \App\User::with(['supervisionados', 'supervisor'])->get()
+        // ];
+        return view('administrador.usuarios');
     }
 
 
     public function deletaUsuario(Request $request){
-        
-        
+        $id = $request->input('id');
+        return \App\User::destroy($id);
+    }
+
+    public function inativaUsuario(Request $request){
+        $id = $request->input('id');
+        $usuario = \App\User::find($id);
+        $usuario->active = "0";
+        if($usuario->save()){
+            return "OK";
+        }
+
+        return false;
+       
     }
 
 

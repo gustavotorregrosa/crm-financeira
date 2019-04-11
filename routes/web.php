@@ -41,3 +41,4 @@ Route::get('/administrador/usuarios', 'AdministradorController@usuarios');
 Route::post('/administrador/usuariosjson', 'AdministradorController@ajaxUsuarios');
 
 Route::post('/deleta-usuario', 'AdministradorController@deletaUsuario');
+Route::post('/inativa-usuario', 'AdministradorController@inativaUsuario');

@@ -111,7 +111,7 @@
 
     <!-- sparkline js -->
     <script src="{{asset('custom-assets/painel-geral/assets/vendor/charts/sparkline/jquery.sparkline.js')}}"></script>
-
+    <script src="{{asset('custom-assets/painel-geral/documentation/js/notify.js')}}"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap4.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.6/js/dataTables.buttons.js"></script>
