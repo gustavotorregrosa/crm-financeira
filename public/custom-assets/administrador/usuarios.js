@@ -9,9 +9,19 @@ $(document).ready(function () {
 
 function init(){
     tabelaPrincipal = listar();
-   
-
+    
+    
 }
+
+
+
+tbody.on("click", "button.btn-reativar", function(){
+    let dados = tabelaPrincipal.row($(this).parents("tr")).data();
+    $("#spn-usr-reat").html(dados.name);
+    $('#mdl-reativa-usuario').data("id-reat", dados.id);
+    $('#mdl-reativa-usuario').modal("show");
+
+});
 
 
 tbody.on("click", "button.btn-inativar", function(){
@@ -19,11 +29,26 @@ tbody.on("click", "button.btn-inativar", function(){
     $("#spn-usr-inat").html(dados.name);
     $('#mdl-inativa-usuario').data("id-inat", dados.id);
     $('#mdl-inativa-usuario').modal("show");
-    
-   
-
 
 });
+
+
+tbody.on("click", "button.btn-deletar", function(){
+
+
+    let dados = tabelaPrincipal.row($(this).parents("tr")).data();
+    $("#spn-usr-del").html(dados.name);
+    $('#mdl-deleta-usuario').data("id-del", dados.id);
+    $('#mdl-deleta-usuario').modal("show");
+
+});
+
+
+
+
+
+
+
 
  function listar(){
  
@@ -113,29 +138,54 @@ tbody.on("click", "button.btn-inativar", function(){
 // }
 
 
-// $("#btn-del-usr").on("click", function(){
-//     let id = $('#mdl-deleta-usuario').data("id-del");
+$("#btn-del-usr").on("click", function(){
+    let id = $('#mdl-deleta-usuario').data("id-del");
     
-//     $.ajax({
-//         type: "POST",
-//         url: '/deleta-usuario',
-//         data: {
-//             id: id
-//         },
-//         async: false,
-//         success: function(data){
-//             $.notify("Usuário deletado", "success");
-//         },
-//         error: function(data){
-//             $.notify("Não foi possível deletar o usuário", "error");
-//         }
+    $.ajax({
+        type: "POST",
+        url: '/deleta-usuario',
+        data: {
+            id: id
+        },
+        async: false,
+        success: function(data){
+            $.notify("Usuário deletado", "success");
+        },
+        error: function(data){
+            $.notify("Não foi possível deletar o usuário", "error");
+        }
      
-//       });
+      });
 
       
-//     $('#mdl-deleta-usuario').modal("hide");
-//     listar();
-// });
+    $('#mdl-deleta-usuario').modal("hide");
+    init();
+});
+
+
+$("#btn-reat-usr").on("click", function(){
+    let id = $('#mdl-reativa-usuario').data("id-reat");
+    
+    $.ajax({
+        type: "POST",
+        url: '/reativa-usuario',
+        data: {
+            id: id
+        },
+        async: false,
+        success: function(data){
+            $.notify("Usuário reativado", "success");
+        },
+        error: function(data){
+            $.notify("Não foi possível reativar o usuário", "error");
+        }
+     
+      });
+
+      
+    $('#mdl-reativa-usuario').modal("hide");
+    init();
+});
 
 
 $("#btn-inat-usr").on("click", function(){

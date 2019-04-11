@@ -58,6 +58,19 @@ class AdministradorController extends Controller
     }
 
 
+    public function reativaUsuario(Request $request){
+        $id = $request->input('id');
+        $usuario = \App\User::find($id);
+        $usuario->active = "1";
+        if($usuario->save()){
+            return "OK";
+        }
+
+        return false;
+       
+    }
+
+
     /**
      * Show the form for creating a new resource.
      *
