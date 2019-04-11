@@ -32,11 +32,47 @@ class AdministradorController extends Controller
     }
 
 
+    public function retSupervisores(){
+        $supervisores =  \App\User::whereHas('perfilUsuario', function($query){
+            $query->where('nome', 'Supervisor');
+        })->get();
+        return json_encode($supervisores);
+
+
+    }
+
+
+
     public function usuarios(){
-        // $dados = [
-        //     'usuarios' => \App\User::with(['supervisionados', 'supervisor'])->get()
-        // ];
-        return view('administrador.usuarios');
+        $perfisTemp = \App\Perfil::all();
+        $perfis = [];
+        $necessitaSupervisor = [
+            'operador',
+            'analista'
+        ];
+        $necessitaSupervisorNum = [];
+        foreach($perfisTemp as $perfil){     
+            $perfil->necessitaSup = false;       
+            if(in_array(strtolower($perfil->nome), $necessitaSupervisor)){
+                $perfil->necessitaSup = true;
+                $necessitaSupervisorNum[] = $perfil->id;
+            }
+            $perfis[] = $perfil;
+        }
+
+        $necessitaSupervisorNum = implode(",", $necessitaSupervisorNum);
+        
+        $dados = [
+            'perfis' => $perfis,
+            'supervisores' => \App\User::whereHas('perfilUsuario', function($query){
+                $query->where('nome', 'Supervisor');
+            })->get(),
+            'precisaSup' => $necessitaSupervisorNum
+          
+        ];
+
+        
+        return view('administrador.usuarios', $dados);
     }
 
 

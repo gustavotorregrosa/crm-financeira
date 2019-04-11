@@ -206,9 +206,62 @@ $("#btn-inat-usr").on("click", function(){
         }
      
       });
-
-      
     $('#mdl-inativa-usuario').modal("hide");
     init();
 });
 
+
+
+$("#btn-am-add-user").on("click", function(){
+    $("#mdl-cria-usuario").modal("show");
+});
+
+
+function verificaPerfil(perfil){
+    let perfis = $("#precisa-sup").val().split(",");
+    let isNecessitaSup = perfis.includes(perfil);
+    if(isNecessitaSup){
+        $("#grp-supervisor").show("slow");
+    }else{
+        $("#grp-supervisor").hide("slow");
+    }
+
+
+}
+
+
+function populaSupervisores(){
+    $.ajax({
+        type: "POST",
+        url: '/pega-supervisores',
+        data: {
+            
+        },
+        async: false,
+        success: function(data){
+            // console.log(data);
+            let supervisores = JSON.parse(data);
+            
+            $("#user-supervisor option").remove();
+            let padrao = new Option('Escolha um supervisor', '');
+            $(padrao).prop('defaultSelected', true);
+            $(padrao).prop('disabled', true);
+            $("#user-supervisor").append($(padrao));
+
+            $.each(supervisores, function(index, sup){
+                $("#user-supervisor").append($(new Option(sup.name, sup.id)));
+            });
+
+
+            // let option1 = new Option('ola mundo 2', 123);           
+            // $("#user-supervisor").append($(option1));
+
+            // let option2 = new Option('ola mundo 3', 123);           
+            // $("#user-supervisor").append($(option2));
+
+
+
+        }
+     
+      });
+}
