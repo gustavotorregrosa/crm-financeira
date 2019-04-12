@@ -45,3 +45,6 @@ Route::post('/inativa-usuario', 'AdministradorController@inativaUsuario');
 Route::post('/reativa-usuario', 'AdministradorController@reativaUsuario');
 
 Route::post('/pega-supervisores', 'AdministradorController@retSupervisores');
+
+Route::post('/cria-usuario', 'AdministradorController@criaUsuario');
+Route::post('/edita-usuario', 'AdministradorController@editaUsuario');

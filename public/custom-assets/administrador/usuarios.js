@@ -7,8 +7,9 @@ $(document).ready(function () {
 });
 
 
-function init(){
+function init(){    
     tabelaPrincipal = listar();
+    populaSupervisores();
     
     
 }
@@ -230,6 +231,20 @@ function verificaPerfil(perfil){
 }
 
 
+
+function verificaPerfilEdit(perfil){
+    let perfis = $("#precisa-sup-edit").val().split(",");
+    let isNecessitaSup = perfis.includes(perfil);
+    if(isNecessitaSup){
+        $("#grp-supervisor-edit").show("slow");
+    }else{
+        $("#grp-supervisor-edit").hide("slow");
+    }
+
+
+}
+
+
 function populaSupervisores(){
     $.ajax({
         type: "POST",
@@ -252,16 +267,121 @@ function populaSupervisores(){
                 $("#user-supervisor").append($(new Option(sup.name, sup.id)));
             });
 
+            $("#user-supervisor-edit option").remove();
+            let padrao2 = new Option('Sem supervisor', '');
+            $(padrao2).prop('disabled', false);
+            $("#user-supervisor-edit").append($(padrao2));
+            $.each(supervisores, function(index, sup){
+                $("#user-supervisor-edit").append($(new Option(sup.name, sup.id)));
+            });
 
-            // let option1 = new Option('ola mundo 2', 123);           
-            // $("#user-supervisor").append($(option1));
-
-            // let option2 = new Option('ola mundo 3', 123);           
-            // $("#user-supervisor").append($(option2));
-
+          
 
 
         }
      
       });
 }
+
+$("#btn-criar-usr").on("click", function(e){
+    e.preventDefault(); 
+    let dadosNovoUsuario = {
+        nome: $("#frm-criar-usuario #user-nome").val(),
+        email: $("#frm-criar-usuario #user-email").val(),
+        perfil: $("#frm-criar-usuario #user-perfil").val(),
+        supervisor: $("#frm-criar-usuario #user-supervisor").val(),
+        senha: $("#frm-criar-usuario #user-senha").val(),
+        ativo: $("#frm-criar-usuario #user-ativo")[0].checked
+
+    } 
+
+    $.ajax({
+        type: "POST",
+        url: '/cria-usuario',
+        data: dadosNovoUsuario,
+        async: false,
+        success: function(data){
+            $.notify("Usuário criado", "success");
+            $('#mdl-cria-usuario').modal("hide");
+            $("#frm-criar-usuario")[0].reset();
+            init();
+        },
+        error: function(data){
+            $.notify("Não foi possível criar o usuário", "error");
+            $('#mdl-cria-usuario').modal("hide");
+            $("#frm-criar-usuario")[0].reset();
+            init();
+        }
+     
+      });
+
+
+
+
+});
+
+
+
+
+
+
+tbody.on("click", "button.btn-editar", function(){
+    let usuario = tabelaPrincipal.row($(this).parents("tr")).data();
+    $("#frm-editar-usuario #usr-edit-id").val(usuario.id);
+    $("#frm-editar-usuario #user-nome-edit").val(usuario.name);
+    $("#frm-editar-usuario #user-email-edit").val(usuario.email);
+    $("#frm-editar-usuario #user-senha-edit").val("");
+    $("#frm-editar-usuario #user-perfil-edit").val(usuario.perfil).change();
+    $("#frm-editar-usuario #user-supervisor-edit").val("").change();
+    if(usuario.supervisor){
+        $("#frm-editar-usuario #user-supervisor-edit").val(usuario.supervisor.id).change();
+    }
+
+    $("#frm-editar-usuario #user-ativo-edit").attr('checked', false);
+    if(usuario.active){
+        $("#frm-editar-usuario #user-ativo-edit").attr('checked', true);
+    }
+
+    $("#mdl-edita-usuario").modal("show");
+
+});
+
+
+
+$("#btn-edita-usr").on("click", function(e){
+    e.preventDefault(); 
+    let dadosUsuario = {
+        id: $("#frm-editar-usuario #usr-edit-id").val(),
+        nome: $("#frm-editar-usuario #user-nome-edit").val(),
+        email:  $("#frm-editar-usuario #user-email-edit").val(),
+        perfil: $("#frm-editar-usuario #user-perfil-edit").val(),
+        supervisor: $("#frm-editar-usuario #user-supervisor-edit").val(),
+        senha: $("#frm-editar-usuario #user-senha-edit").val(),
+        ativo: $("#frm-editar-usuario #user-ativo-edit")[0].checked
+
+    } 
+
+    $.ajax({
+        type: "POST",
+        url: '/edita-usuario',
+        data: dadosUsuario,
+        async: false,
+        success: function(data){
+            $.notify("Usuário editado", "success");
+            $('#mdl-edita-usuario').modal("hide");
+            $("#frm-editar-usuario")[0].reset();
+            init();
+        },
+        error: function(data){
+            $.notify("Não foi possível editar o usuário", "error");
+            $('#mdl-edita-usuario').modal("hide");
+            $("#frm-editar-usuario")[0].reset();
+            init();
+        }
+     
+      });
+
+
+
+
+});

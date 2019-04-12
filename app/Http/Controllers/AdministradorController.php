@@ -24,6 +24,65 @@ class AdministradorController extends Controller
     }
 
 
+    public function editaUsuario(Request $request){
+        
+        $usuario = \App\User::find($request->input('id'));
+        $usuario->name = $request->input('nome');
+        $usuario->email = $request->input('email');
+        if($request->input('senha') != ""){
+            $usuario->password = \bcrypt($request->input('senha'));
+        }
+        
+        $usuario->active = "0";
+        if($request->input('ativo') == true){
+            $usuario->active = "1";
+        }
+
+        $usuario->perfil = $request->input('perfil');
+        $usuario->supervisor = $request->input('supervisor');
+
+
+        if($usuario->save()){
+            return "OK";
+        }
+
+        return false;
+
+
+        
+
+
+    }
+
+
+    public function criaUsuario(Request $request){
+        
+        $novoUsuario = new \App\User;
+        $novoUsuario->name = $request->input('nome');
+        $novoUsuario->email = $request->input('email');
+        $novoUsuario->password = \bcrypt($request->input('senha'));
+        $novoUsuario->active = "0";
+
+        if($request->input('ativo') == true){
+            $novoUsuario->active = "1";
+        }
+
+        $novoUsuario->perfil = $request->input('perfil');
+        $novoUsuario->supervisor = $request->input('supervisor');
+
+
+        if($novoUsuario->save()){
+            return "OK";
+        }
+
+        return false;
+
+
+        
+
+
+    }
+
     public function ajaxUsuarios(){
         
         $usuarios = \App\User::with(['supervisionados', 'supervisor'])->get();
