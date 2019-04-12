@@ -291,7 +291,15 @@ $("#btn-criar-usr").on("click", function(e){
         perfil: $("#frm-criar-usuario #user-perfil").val(),
         supervisor: $("#frm-criar-usuario #user-supervisor").val(),
         senha: $("#frm-criar-usuario #user-senha").val(),
-        ativo: $("#frm-criar-usuario #user-ativo")[0].checked
+        ativo: function(){
+            if( $("#frm-criar-usuario #user-ativo")[0].checked){
+                return 1;
+            }
+            return 0;
+        } 
+        
+        
+       
 
     } 
 
@@ -357,7 +365,14 @@ $("#btn-edita-usr").on("click", function(e){
         perfil: $("#frm-editar-usuario #user-perfil-edit").val(),
         supervisor: $("#frm-editar-usuario #user-supervisor-edit").val(),
         senha: $("#frm-editar-usuario #user-senha-edit").val(),
-        ativo: $("#frm-editar-usuario #user-ativo-edit")[0].checked
+        ativo: function(){
+            if($("#frm-editar-usuario #user-ativo-edit")[0].checked){
+                return 1;
+            }
+            return 0;
+        } 
+        
+        
 
     } 
 

@@ -33,8 +33,9 @@ class AdministradorController extends Controller
             $usuario->password = \bcrypt($request->input('senha'));
         }
         
-        $usuario->active = "0";
+        $usuario->active = null;
         if($request->input('ativo') == true){
+
             $usuario->active = "1";
         }
 
@@ -61,7 +62,7 @@ class AdministradorController extends Controller
         $novoUsuario->name = $request->input('nome');
         $novoUsuario->email = $request->input('email');
         $novoUsuario->password = \bcrypt($request->input('senha'));
-        $novoUsuario->active = "0";
+        // $novoUsuario->active = 0;
 
         if($request->input('ativo') == true){
             $novoUsuario->active = "1";
@@ -143,7 +144,7 @@ class AdministradorController extends Controller
     public function inativaUsuario(Request $request){
         $id = $request->input('id');
         $usuario = \App\User::find($id);
-        $usuario->active = "0";
+        $usuario->active = null;
         if($usuario->save()){
             return "OK";
         }
