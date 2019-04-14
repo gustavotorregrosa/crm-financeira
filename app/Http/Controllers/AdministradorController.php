@@ -84,6 +84,24 @@ class AdministradorController extends Controller
 
     }
 
+
+    public function reativaUsuarioDeletado(Request $request){
+        $id = $request->input('id');
+
+        $restauracao = \App\User::withTrashed()
+        ->where('id', $id)
+        ->restore();
+
+        if($restauracao){
+            return "OK";
+        }
+
+        return false;
+
+    }
+
+    
+
     public function ajaxUsuarios(){
         
         $usuarios = \App\User::with(['supervisionados', 'supervisor'])->get();
@@ -101,6 +119,16 @@ class AdministradorController extends Controller
 
     }
 
+
+    public function usuariosExluidos(){
+        $usuarios = \App\User::onlyTrashed()->get();
+        $dados = [
+            'usuarios' => $usuarios
+        ];
+
+        return view('administrador.deletados', $dados);
+        
+    }
 
 
     public function usuarios(){

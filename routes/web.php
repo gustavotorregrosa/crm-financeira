@@ -38,6 +38,7 @@ Route::get('/logout', 'Auth\LoginController@logout');
 
 Route::get('/administrador', 'AdministradorController@index');
 Route::get('/administrador/usuarios', 'AdministradorController@usuarios');
+Route::get('/administrador/excluidos', 'AdministradorController@usuariosExluidos');
 Route::post('/administrador/usuariosjson', 'AdministradorController@ajaxUsuarios');
 
 Route::post('/deleta-usuario', 'AdministradorController@deletaUsuario');
@@ -48,3 +49,5 @@ Route::post('/pega-supervisores', 'AdministradorController@retSupervisores');
 
 Route::post('/cria-usuario', 'AdministradorController@criaUsuario');
 Route::post('/edita-usuario', 'AdministradorController@editaUsuario');
+
+Route::post('/reativa-usuario-deletado', 'AdministradorController@reativaUsuarioDeletado');
