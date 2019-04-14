@@ -34,7 +34,7 @@ Route::get('/mensagens', 'HomeController@mensagens');
 
 Route::get('/logout', 'Auth\LoginController@logout');
 
-// Route::get('/analista', 'AnalistaController@index');
+
 
 Route::get('/administrador', 'AdministradorController@index');
 Route::get('/administrador/usuarios', 'AdministradorController@usuarios');
@@ -51,3 +51,10 @@ Route::post('/cria-usuario', 'AdministradorController@criaUsuario');
 Route::post('/edita-usuario', 'AdministradorController@editaUsuario');
 
 Route::post('/reativa-usuario-deletado', 'AdministradorController@reativaUsuarioDeletado');
+
+
+
+Route::get('/analista', 'AnalistaController@index');
+
+
+Route::get('/cliente/cria-novo', 'ClienteController@criaNovo');

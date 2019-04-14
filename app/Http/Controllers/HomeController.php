@@ -37,7 +37,7 @@ class HomeController extends Controller
         if(in_array($perfil, $permissoes)){
             $novaurl = $perfil;
         }else{
-            \Session::put('erro', 'usuario sem perfil 2');
+            \Session::put('erro', 'usuario sem perfil');
             $novaurl = 'mensagens';
         }
 
