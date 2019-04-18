@@ -29,32 +29,19 @@ Route::get('/esqueci', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-
 Route::get('/mensagens', 'HomeController@mensagens');
-
 Route::get('/logout', 'Auth\LoginController@logout');
-
-
-
 Route::get('/administrador', 'AdministradorController@index');
 Route::get('/administrador/usuarios', 'AdministradorController@usuarios');
 Route::get('/administrador/excluidos', 'AdministradorController@usuariosExluidos');
 Route::post('/administrador/usuariosjson', 'AdministradorController@ajaxUsuarios');
-
 Route::post('/deleta-usuario', 'AdministradorController@deletaUsuario');
 Route::post('/inativa-usuario', 'AdministradorController@inativaUsuario');
 Route::post('/reativa-usuario', 'AdministradorController@reativaUsuario');
-
 Route::post('/pega-supervisores', 'AdministradorController@retSupervisores');
-
 Route::post('/cria-usuario', 'AdministradorController@criaUsuario');
 Route::post('/edita-usuario', 'AdministradorController@editaUsuario');
-
 Route::post('/reativa-usuario-deletado', 'AdministradorController@reativaUsuarioDeletado');
-
-
-
 Route::get('/analista', 'AnalistaController@index');
-
-
 Route::get('/cliente/cria-novo', 'ClienteController@criaNovo');
+Route::get('/administrador/empresas', 'AdministradorController@empresas');

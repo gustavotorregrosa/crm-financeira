@@ -42,7 +42,7 @@
                         <li style="padding: 1.5em;">
                             <p>{{ Auth::user()->name }}</p>
                         </li>
-                        <li style="margin: 1em;"><button class="btn btn-success btn-sm">Logout</button></li>
+                        <li style="margin: 1em;"><button id="btn-logout" class="btn btn-success btn-sm">Logout</button></li>
                     </ul>
                 </div>
             </nav>
@@ -125,6 +125,11 @@
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
+        });
+
+        $("#btn-logout").on("click", function(){
+            $.notify("Até logo!", "info");
+            window.location.href = "/logout";
         });
     </script>
 

@@ -24,6 +24,11 @@ class AdministradorController extends Controller
     }
 
 
+
+    public function empresas(){
+        return view('administrador.empresas');
+    }
+
     public function editaUsuario(Request $request){
         
         $usuario = \App\User::find($request->input('id'));

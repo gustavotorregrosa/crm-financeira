@@ -7,22 +7,35 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav flex-column">
-
                     <li class="nav-item ">
-                        <a class="nav-link active" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-1" aria-controls="submenu-1"><i class="fa fa-fw fa-user-circle"></i>Usuários <span class="badge badge-success">6</span></a>
+
+                        <a class="nav-link active" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-1" aria-controls="submenu-1"><i class="fa fa-fw fa-user-circle"></i>Cadastros</a>
                         <div id="submenu-1" class="collapse submenu" style="">
                             <ul class="nav flex-column">
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{url('/administrador/usuarios')}}">Listagem</a>
+                                    <a class="nav-link" href="dashboard-finance.html">Empresa</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{url('/administrador/excluidos')}}">Excluídos</a>
+                                    <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-1-2" aria-controls="submenu-1-2">Usuários</a>
+                                    <div id="submenu-1-2" class="collapse submenu" style="">
+                                        <ul class="nav flex-column">
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="{{url('/administrador/usuarios')}}">Listagem</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="{{url('/administrador/excluidos')}}">Excluídos</a>
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </li>
+
+
                             </ul>
                         </div>
+
                     </li>
-       
-                 
+
+
                 </ul>
             </div>
         </nav>
