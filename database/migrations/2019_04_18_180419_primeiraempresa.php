@@ -17,7 +17,9 @@ class Primeiraempresa extends Migration
         $empresa->nomeinterno = 'Sede';
         $empresa->nomefantasia = 'Financeira MAIS!';
         $empresa->razaosocial = 'Financeira ltda.';
+        $empresa->cidade = 'São Paulo';
         $empresa->cnpj = '123456789';
+        $empresa->ativa = true;
         $empresa->save();
     }
 

@@ -45,3 +45,4 @@ Route::post('/reativa-usuario-deletado', 'AdministradorController@reativaUsuario
 Route::get('/analista', 'AnalistaController@index');
 Route::get('/cliente/cria-novo', 'ClienteController@criaNovo');
 Route::get('/administrador/empresas', 'AdministradorController@empresas');
+Route::post('/administrador/empresasjson', 'AdministradorController@ajaxEmpresas');

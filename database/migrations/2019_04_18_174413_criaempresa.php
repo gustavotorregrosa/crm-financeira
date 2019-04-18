@@ -19,6 +19,8 @@ class Criaempresa extends Migration
             $table->string('nomefantasia');
             $table->string('razaosocial');
             $table->string('cnpj');
+            $table->string('cidade');
+            $table->boolean('ativa')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

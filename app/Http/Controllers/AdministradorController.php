@@ -24,6 +24,13 @@ class AdministradorController extends Controller
     }
 
 
+    public function ajaxEmpresas(){
+        
+        $empresas = \App\Empresa::all();
+        $dados['data'] = $empresas;
+        return json_encode($dados);
+    }
+
 
     public function empresas(){
         return view('administrador.empresas');

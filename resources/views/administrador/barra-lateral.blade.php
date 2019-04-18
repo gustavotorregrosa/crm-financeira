@@ -13,7 +13,7 @@
                         <div id="submenu-1" class="collapse submenu" style="">
                             <ul class="nav flex-column">
                                 <li class="nav-item">
-                                    <a class="nav-link" href="dashboard-finance.html">Empresa</a>
+                                    <a class="nav-link" href="{{url('/administrador/empresas')}}">Empresa</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-1-2" aria-controls="submenu-1-2">Usuários</a>
