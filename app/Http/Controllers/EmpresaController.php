@@ -6,6 +6,15 @@ use Illuminate\Http\Request;
 
 class EmpresaController extends Controller
 {
+
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('verificaperfil:administrador');
+    }
+
+
     /**
      * Display a listing of the resource.
      *
@@ -14,6 +23,111 @@ class EmpresaController extends Controller
     public function index()
     {
         //
+    }
+
+
+    public function reativaEmpresaDeletada(Request $request){
+        $id = $request->input('id');
+
+        $restauracao = \App\Empresa::withTrashed()
+        ->where('id', $id)
+        ->restore();
+
+        if($restauracao){
+            return "OK";
+        }
+
+        return false;
+
+    }
+
+
+
+
+    public function editaEmpresa(Request $request){
+        
+        $empresa = \App\Empresa::find($request->input('id'));
+        $empresa->nomeinterno = $request->input('nomeinterno');
+        $empresa->nomefantasia = $request->input('nomefantasia');
+        $empresa->razaosocial = $request->input('razaosocial');
+        $empresa->cnpj = $request->input('cnpj');
+        $empresa->cidade = $request->input('cidade');
+        $empresa->ativa = null;
+
+        if($request->input('ativa') == true){
+            $empresa->ativa = "1";
+        }
+
+
+        if($empresa->save()){
+            return "OK";
+        }
+
+        return false;
+
+
+        
+
+
+    }
+
+    public function criaEmpresa(Request $request){
+        
+        $novaEmpresa = new \App\Empresa;
+        $novaEmpresa->nomeinterno = $request->input('nomeinterno');
+        $novaEmpresa->nomefantasia = $request->input('nomefantasia');
+        $novaEmpresa->razaosocial = $request->input('razaosocial');
+        $novaEmpresa->cnpj = $request->input('cnpj');
+        $novaEmpresa->cidade = $request->input('cidade');
+     
+
+        if($request->input('ativa') == true){
+            $novaEmpresa->ativa = "1";
+        }
+
+
+        if($novaEmpresa->save()){
+            return "OK";
+        }
+
+        return false;
+
+
+        
+
+
+    }
+
+    public function inativaEmpresa(Request $request){
+        $id = $request->input('id');
+        $empresa = \App\Empresa::find($id);
+        $empresa->ativa = null;
+        if($empresa->save()){
+            return "OK";
+        }
+
+        return false;
+       
+    }
+
+
+    public function ajaxEmpresas(){
+        
+        $empresas = \App\Empresa::all();
+        $dados['data'] = $empresas;
+        return json_encode($dados);
+    }
+
+    public function reativaEmpresa(Request $request){
+        $id = $request->input('id');
+        $empresa = \App\Empresa::find($id);
+        $empresa->ativa = "1";
+        if($empresa->save()){
+            return "OK";
+        }
+
+        return false;
+       
     }
 
     /**

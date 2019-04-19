@@ -24,12 +24,7 @@ class AdministradorController extends Controller
     }
 
 
-    public function ajaxEmpresas(){
-        
-        $empresas = \App\Empresa::all();
-        $dados['data'] = $empresas;
-        return json_encode($dados);
-    }
+  
 
 
     public function empresas(){
@@ -139,6 +134,18 @@ class AdministradorController extends Controller
         ];
 
         return view('administrador.deletados', $dados);
+        
+    }
+
+
+
+    public function empresasExcluidas(){
+        $empresas = \App\Empresa::onlyTrashed()->get();
+        $dados = [
+            'empresas' => $$empresas
+        ];
+
+        return view('administrador.empresas-deletadas', $dados);
         
     }
 

@@ -34,6 +34,7 @@ Route::get('/logout', 'Auth\LoginController@logout');
 Route::get('/administrador', 'AdministradorController@index');
 Route::get('/administrador/usuarios', 'AdministradorController@usuarios');
 Route::get('/administrador/excluidos', 'AdministradorController@usuariosExluidos');
+Route::get('/administrador/empresas-excluidas', 'AdministradorController@empresasExluidas');
 Route::post('/administrador/usuariosjson', 'AdministradorController@ajaxUsuarios');
 Route::post('/deleta-usuario', 'AdministradorController@deletaUsuario');
 Route::post('/inativa-usuario', 'AdministradorController@inativaUsuario');
@@ -45,4 +46,9 @@ Route::post('/reativa-usuario-deletado', 'AdministradorController@reativaUsuario
 Route::get('/analista', 'AnalistaController@index');
 Route::get('/cliente/cria-novo', 'ClienteController@criaNovo');
 Route::get('/administrador/empresas', 'AdministradorController@empresas');
-Route::post('/administrador/empresasjson', 'AdministradorController@ajaxEmpresas');
+Route::post('/administrador/empresasjson', 'EmpresaController@ajaxEmpresas');
+Route::post('/reativa-empresa', 'EmpresaController@reativaEmpresa');
+Route::post('/inativa-empresa', 'EmpresaController@inativaEmpresa');
+Route::post('/cria-empresa', 'EmpresaController@criaEmpresa');
+Route::post('/edita-empresa', 'EmpresaController@editaEmpresa');
+Route::post('/reativa-empresa-deletada', 'EmpresaController@reativaEmpresaDeletada');

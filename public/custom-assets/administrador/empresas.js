@@ -2,6 +2,7 @@ tbody = $("tbody");
 
 $(document).ready(function () {
     init();
+    $('.cnpj').mask('00.000.000/0000-00', {reverse: true});
    
 
 });
@@ -18,20 +19,20 @@ function init(){
 
 tbody.on("click", "button.btn-reativar", function(){
     let dados = tabelaPrincipal.row($(this).parents("tr")).data();
-    $("#spn-empr-reat").html(dados.name);
+    $("#spn-empr-reat").html(dados.nomeinterno);
     $('#mdl-reativa-empresa').data("id-reat", dados.id);
     $('#mdl-reativa-empresa').modal("show");
 
 });
 
 
-// tbody.on("click", "button.btn-inativar", function(){
-//     let dados = tabelaPrincipal.row($(this).parents("tr")).data();
-//     $("#spn-usr-inat").html(dados.name);
-//     $('#mdl-inativa-usuario').data("id-inat", dados.id);
-//     $('#mdl-inativa-usuario').modal("show");
+tbody.on("click", "button.btn-inativar", function(){
+    let dados = tabelaPrincipal.row($(this).parents("tr")).data();
+    $("#spn-empr-inat").html(dados.nomeinterno);
+    $('#mdl-inativa-empresa').data("id-inat", dados.id);
+    $('#mdl-inativa-empresa').modal("show");
 
-// });
+});
 
 
 // tbody.on("click", "button.btn-deletar", function(){
@@ -164,58 +165,58 @@ tbody.on("click", "button.btn-reativar", function(){
 // });
 
 
-// $("#btn-reat-usr").on("click", function(){
-//     let id = $('#mdl-reativa-usuario').data("id-reat");
+$("#btn-reat-empresa").on("click", function(){
+    let id = $('#mdl-reativa-empresa').data("id-reat");
     
-//     $.ajax({
-//         type: "POST",
-//         url: '/reativa-usuario',
-//         data: {
-//             id: id
-//         },
-//         async: false,
-//         success: function(data){
-//             $.notify("Usuário reativado", "success");
-//         },
-//         error: function(data){
-//             $.notify("Não foi possível reativar o usuário", "error");
-//         }
+    $.ajax({
+        type: "POST",
+        url: '/reativa-empresa',
+        data: {
+            id: id
+        },
+        async: false,
+        success: function(data){
+            $.notify("Empresa reativada", "success");
+        },
+        error: function(data){
+            $.notify("Não foi possível reativar a empresa", "error");
+        }
      
-//       });
+      });
 
       
-//     $('#mdl-reativa-usuario').modal("hide");
-//     init();
-// });
+    $('#mdl-reativa-empresa').modal("hide");
+    init();
+});
 
 
-// $("#btn-inat-usr").on("click", function(){
-//     let id = $('#mdl-inativa-usuario').data("id-inat");
+$("#btn-inat-empr").on("click", function(){
+    let id = $('#mdl-inativa-empresa').data("id-inat");
     
-//     $.ajax({
-//         type: "POST",
-//         url: '/inativa-usuario',
-//         data: {
-//             id: id
-//         },
-//         async: false,
-//         success: function(data){
-//             $.notify("Usuário inativado", "success");
-//         },
-//         error: function(data){
-//             $.notify("Não foi possível inativar o usuário", "error");
-//         }
+    $.ajax({
+        type: "POST",
+        url: '/inativa-empresa',
+        data: {
+            id: id
+        },
+        async: false,
+        success: function(data){
+            $.notify("Empresa inativada", "success");
+        },
+        error: function(data){
+            $.notify("Não foi possível inativar a empresa", "error");
+        }
      
-//       });
-//     $('#mdl-inativa-usuario').modal("hide");
-//     init();
-// });
+      });
+    $('#mdl-inativa-empresa').modal("hide");
+    init();
+});
 
 
 
-// $("#btn-am-add-user").on("click", function(){
-//     $("#mdl-cria-usuario").modal("show");
-// });
+$("#btn-am-add-empresa").on("click", function(){
+    $("#mdl-cria-empresa").modal("show");
+});
 
 
 // function verificaPerfil(perfil){
@@ -283,120 +284,116 @@ tbody.on("click", "button.btn-reativar", function(){
 //       });
 // }
 
-// $("#btn-criar-usr").on("click", function(e){
-//     e.preventDefault(); 
-//     let dadosNovoUsuario = {
-//         nome: $("#frm-criar-usuario #user-nome").val(),
-//         email: $("#frm-criar-usuario #user-email").val(),
-//         perfil: $("#frm-criar-usuario #user-perfil").val(),
-//         supervisor: $("#frm-criar-usuario #user-supervisor").val(),
-//         senha: $("#frm-criar-usuario #user-senha").val(),
-//         ativo: function(){
-//             if( $("#frm-criar-usuario #user-ativo")[0].checked){
-//                 return 1;
-//             }
-//             return 0;
-//         } 
+$("#btn-criar-empr").on("click", function(e){
+    e.preventDefault(); 
+    let dadosNovaEmpresa = {
+        nomeinterno: $("#frm-criar-empresa #empresa-nomeinterno").val(),
+        nomefantasia: $("#frm-criar-empresa #empresa-nomefantasia").val(),
+        razaosocial: $("#frm-criar-empresa #empresa-razaosocial").val(),
+        cnpj: $("#frm-criar-empresa #empresa-cnpj").val(),
+        cidade: $("#frm-criar-empresa #empresa-cidade").val(),
+        ativa: function(){
+            if( $("#frm-criar-empresa #empresa-ativa")[0].checked){
+                return 1;
+            }
+            return 0;
+        } 
         
         
        
 
-//     } 
+    } 
 
-//     $.ajax({
-//         type: "POST",
-//         url: '/cria-usuario',
-//         data: dadosNovoUsuario,
-//         async: false,
-//         success: function(data){
-//             $.notify("Usuário criado", "success");
-//             $('#mdl-cria-usuario').modal("hide");
-//             $("#frm-criar-usuario")[0].reset();
-//             init();
-//         },
-//         error: function(data){
-//             $.notify("Não foi possível criar o usuário", "error");
-//             $('#mdl-cria-usuario').modal("hide");
-//             $("#frm-criar-usuario")[0].reset();
-//             init();
-//         }
+    $.ajax({
+        type: "POST",
+        url: '/cria-empresa',
+        data: dadosNovaEmpresa,
+        async: false,
+        success: function(data){
+            $.notify("Empresa criada", "success");
+            $('#mdl-cria-empresa').modal("hide");
+            $("#frm-criar-empresa")[0].reset();
+            init();
+        },
+        error: function(data){
+            $.notify("Não foi possível criar a empresa", "error");
+            $('#mdl-cria-empresa').modal("hide");
+            $("#frm-criar-empresa")[0].reset();
+            init();
+        }
      
-//       });
+      });
 
 
 
 
-// });
+});
 
 
 
 
 
 
-// tbody.on("click", "button.btn-editar", function(){
-//     let usuario = tabelaPrincipal.row($(this).parents("tr")).data();
-//     $("#frm-editar-usuario #usr-edit-id").val(usuario.id);
-//     $("#frm-editar-usuario #user-nome-edit").val(usuario.name);
-//     $("#frm-editar-usuario #user-email-edit").val(usuario.email);
-//     $("#frm-editar-usuario #user-senha-edit").val("");
-//     $("#frm-editar-usuario #user-perfil-edit").val(usuario.perfil).change();
-//     $("#frm-editar-usuario #user-supervisor-edit").val("").change();
-//     if(usuario.supervisor){
-//         $("#frm-editar-usuario #user-supervisor-edit").val(usuario.supervisor.id).change();
-//     }
+tbody.on("click", "button.btn-editar", function(){
+    let empresa = tabelaPrincipal.row($(this).parents("tr")).data();
+    $("#frm-edita-empresa #empresa-id-edit").val(empresa.id);
+    $("#frm-edita-empresa #empresa-nomeinterno-edit").val(empresa.nomeinterno);
+    $("#frm-edita-empresa #empresa-nomefantasia-edit").val(empresa.nomefantasia);
+    $("#frm-edita-empresa #empresa-razaosocial-edit").val(empresa.razaosocial);
+    $("#frm-edita-empresa #empresa-cnpj-edit").val(empresa.cnpj);
+    $("#frm-edita-empresa #empresa-cidade-edit").val(empresa.cidade);
+    $("#frm-edita-empresa #empresa-ativa-edit").attr('checked', false);
+    if(empresa.ativa){
+        $("#frm-edita-empresa #empresa-ativa-edit").attr('checked', true);
+    }
 
-//     $("#frm-editar-usuario #user-ativo-edit").attr('checked', false);
-//     if(usuario.active){
-//         $("#frm-editar-usuario #user-ativo-edit").attr('checked', true);
-//     }
+    $("#mdl-edita-empresa").modal("show");
 
-//     $("#mdl-edita-usuario").modal("show");
-
-// });
+});
 
 
 
-// $("#btn-edita-usr").on("click", function(e){
-//     e.preventDefault(); 
-//     let dadosUsuario = {
-//         id: $("#frm-editar-usuario #usr-edit-id").val(),
-//         nome: $("#frm-editar-usuario #user-nome-edit").val(),
-//         email:  $("#frm-editar-usuario #user-email-edit").val(),
-//         perfil: $("#frm-editar-usuario #user-perfil-edit").val(),
-//         supervisor: $("#frm-editar-usuario #user-supervisor-edit").val(),
-//         senha: $("#frm-editar-usuario #user-senha-edit").val(),
-//         ativo: function(){
-//             if($("#frm-editar-usuario #user-ativo-edit")[0].checked){
-//                 return 1;
-//             }
-//             return 0;
-//         } 
+$("#btn-edit-empr").on("click", function(e){
+    e.preventDefault(); 
+    let dadosEmpresa = {
+        id: $("#frm-edita-empresa #empresa-id-edit").val(),
+        nomeinterno: $("#frm-edita-empresa #empresa-nomeinterno-edit").val(),
+        nomefantasia:  $("#frm-edita-empresa #empresa-nomefantasia-edit").val(),
+        razaosocial:  $("#frm-edita-empresa #empresa-razaosocial-edit").val(),
+        cnpj:  $("#frm-edita-empresa #empresa-cnpj-edit").val(),
+        cidade:  $("#frm-edita-empresa #empresa-cidade-edit").val(),
+        ativa: function(){
+            if($("#frm-edita-empresa #empresa-ativa-edit")[0].checked){
+                return 1;
+            }
+            return 0;
+        } 
         
         
 
-//     } 
+    } 
 
-//     $.ajax({
-//         type: "POST",
-//         url: '/edita-usuario',
-//         data: dadosUsuario,
-//         async: false,
-//         success: function(data){
-//             $.notify("Usuário editado", "success");
-//             $('#mdl-edita-usuario').modal("hide");
-//             $("#frm-editar-usuario")[0].reset();
-//             init();
-//         },
-//         error: function(data){
-//             $.notify("Não foi possível editar o usuário", "error");
-//             $('#mdl-edita-usuario').modal("hide");
-//             $("#frm-editar-usuario")[0].reset();
-//             init();
-//         }
+    $.ajax({
+        type: "POST",
+        url: '/edita-empresa',
+        data: dadosEmpresa,
+        async: false,
+        success: function(data){
+            $.notify("Empresa editada", "success");
+            $('#mdl-edita-empresa').modal("hide");
+            $("#frm-edita-empresa")[0].reset();
+            init();
+        },
+        error: function(data){
+            $.notify("Não foi possível editar a empresa", "error");
+            $('#mdl-edita-empresa').modal("hide");
+            $("#frm-edita-empresa")[0].reset();
+            init();
+        }
      
-//       });
+      });
 
 
 
 
-// });
+});
