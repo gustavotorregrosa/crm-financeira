@@ -18,7 +18,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'active'
+        'name', 'email', 'password', 'active', 'empresa'
     ];
 
     protected $with = [
@@ -54,6 +54,10 @@ class User extends Authenticatable
         return $this->belongsTo('App\User', 'supervisor');
     }
 
+
+    public function empresa(){
+        return $this->belongsTo('App\Empresa', 'empresa');
+    }
 
     // public function supervisionados($id = 0){
     //     if($id == 0){

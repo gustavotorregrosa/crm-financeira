@@ -12,7 +12,6 @@ function init(){
     tabelaPrincipal = listar();
     // populaSupervisores();
     
-    
 }
 
 
@@ -35,15 +34,15 @@ tbody.on("click", "button.btn-inativar", function(){
 });
 
 
-// tbody.on("click", "button.btn-deletar", function(){
+tbody.on("click", "button.btn-deletar", function(){
 
 
-//     let dados = tabelaPrincipal.row($(this).parents("tr")).data();
-//     $("#spn-usr-del").html(dados.name);
-//     $('#mdl-deleta-usuario').data("id-del", dados.id);
-//     $('#mdl-deleta-usuario').modal("show");
+    let dados = tabelaPrincipal.row($(this).parents("tr")).data();
+    $("#spn-empresa-del").html(dados.nomeinterno);
+    $('#mdl-deleta-empresa').data("id-del", dados.id);
+    $('#mdl-deleta-empresa').modal("show");
 
-// });
+});
 
 
 
@@ -140,29 +139,29 @@ tbody.on("click", "button.btn-inativar", function(){
 // }
 
 
-// $("#btn-del-usr").on("click", function(){
-//     let id = $('#mdl-deleta-usuario').data("id-del");
+$("#btn-del-empresa").on("click", function(){
+    let id = $('#mdl-deleta-empresa').data("id-del");
     
-//     $.ajax({
-//         type: "POST",
-//         url: '/deleta-usuario',
-//         data: {
-//             id: id
-//         },
-//         async: false,
-//         success: function(data){
-//             $.notify("Usuário deletado", "success");
-//         },
-//         error: function(data){
-//             $.notify("Não foi possível deletar o usuário", "error");
-//         }
+    $.ajax({
+        type: "POST",
+        url: '/deleta-empresa',
+        data: {
+            id: id
+        },
+        async: false,
+        success: function(data){
+            $.notify("Empresa deletada", "success");
+        },
+        error: function(data){
+            $.notify("Não foi possível deletar a empresa", "error");
+        }
      
-//       });
+      });
 
       
-//     $('#mdl-deleta-usuario').modal("hide");
-//     init();
-// });
+    $('#mdl-deleta-empresa').modal("hide");
+    init();
+});
 
 
 $("#btn-reat-empresa").on("click", function(){

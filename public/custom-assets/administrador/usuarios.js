@@ -2,14 +2,22 @@ tbody = $("tbody");
 
 $(document).ready(function () {
     init();
+    populaSupervisoresEdicao();
+
    
 
+});
+
+$("#user-empresa").on("change", function(){
+    let empresa = $("#user-empresa").val();
+    populaSupervisoresCriacao(empresa);
 });
 
 
 function init(){    
     tabelaPrincipal = listar();
-    populaSupervisores();
+    // populaSupervisores();
+    populaEmpresas();
     
     
 }
@@ -62,7 +70,13 @@ tbody.on("click", "button.btn-deletar", function(){
         },
         "columns": [
             {"data": "name"},
-            {"data": "email"},
+            {"data": function(usuario){
+                if(usuario.empresa){
+                    return usuario.empresa.nomeinterno;
+                } 
+                    return '';
+                
+            }},
             {"data": "perfil_usuario.nome"},
             // {"data": "supervisor.name"}
             {"data": function(usuario){
@@ -89,6 +103,10 @@ tbody.on("click", "button.btn-deletar", function(){
         "createdRow": function( row, usuario, dataIndex ) {
             if ( !usuario.active) {
               $(row).addClass('text-danger');
+            }
+
+            if(usuario.active && !usuario.isempresacerta){
+                $(row).addClass('text-warning');
             }
           }
 
@@ -245,12 +263,94 @@ function verificaPerfilEdit(perfil){
 }
 
 
-function populaSupervisores(){
+
+
+function populaEmpresas(){
+    $.ajax({
+        type: "POST",
+        url: '/pega-empresas',
+        data: {
+            
+        },
+        async: false,
+        success: function(data){
+            // console.log(data);
+            let empresas = JSON.parse(data);
+            
+            $("#user-empresa option").remove();
+            let padrao = new Option('Escolha uma empresa', '');
+            $(padrao).prop('defaultSelected', true);
+            $(padrao).prop('disabled', true);
+            $("#user-empresa").append($(padrao));
+
+            $.each(empresas, function(index, emp){
+                $("#user-empresa").append($(new Option(emp.nomeinterno, emp.id)));
+            });
+
+            // $("#user-empresa-edit option").remove();
+            // let padrao2 = new Option('Sem empresa', '');
+            // $(padrao2).prop('disabled', false);
+            // $("#user-empresa-edit").append($(padrao2));
+            // $.each(empresas, function(index, emp){
+            //     $("#user-empresa-edit").append($(new Option(emp.nomeinterno, sup.id)));
+            // });
+
+          
+
+
+        }
+     
+      });
+}
+
+
+function populaSupervisoresEdicao(){
+    $.ajax({
+        type: "POST",
+        url: '/pega-supervisores-todos',
+        data: {
+            
+        },
+        async: false,
+        success: function(data){
+            // console.log(data);
+            let supervisores = JSON.parse(data);
+            
+            $("#user-supervisor option").remove();
+            let padrao = new Option('Escolha um supervisor', '');
+            $(padrao).prop('defaultSelected', true);
+            $(padrao).prop('disabled', true);
+            $("#user-supervisor").append($(padrao));
+
+            $.each(supervisores, function(index, sup){
+                $("#user-supervisor").append($(new Option(sup.name, sup.id)));
+            });
+
+            $("#user-supervisor-edit option").remove();
+            let padrao2 = new Option('Sem supervisor', '');
+            $(padrao2).prop('disabled', false);
+            $("#user-supervisor-edit").append($(padrao2));
+            $.each(supervisores, function(index, sup){
+                $("#user-supervisor-edit").append($(new Option(sup.name, sup.id)));
+            });
+
+          
+
+
+        }
+     
+      });
+}
+
+
+function populaSupervisoresCriacao(empresa){
+
+
     $.ajax({
         type: "POST",
         url: '/pega-supervisores',
         data: {
-            
+            empresa: empresa
         },
         async: false,
         success: function(data){
@@ -289,6 +389,7 @@ $("#btn-criar-usr").on("click", function(e){
         nome: $("#frm-criar-usuario #user-nome").val(),
         email: $("#frm-criar-usuario #user-email").val(),
         perfil: $("#frm-criar-usuario #user-perfil").val(),
+        empresa: $("#frm-criar-usuario #user-empresa").val(),
         supervisor: $("#frm-criar-usuario #user-supervisor").val(),
         senha: $("#frm-criar-usuario #user-senha").val(),
         ativo: function(){
@@ -338,6 +439,7 @@ tbody.on("click", "button.btn-editar", function(){
     $("#frm-editar-usuario #usr-edit-id").val(usuario.id);
     $("#frm-editar-usuario #user-nome-edit").val(usuario.name);
     $("#frm-editar-usuario #user-email-edit").val(usuario.email);
+    $("#frm-editar-usuario #user-empresa-edit").val(usuario.empresa.id);
     $("#frm-editar-usuario #user-senha-edit").val("");
     $("#frm-editar-usuario #user-perfil-edit").val(usuario.perfil).change();
     $("#frm-editar-usuario #user-supervisor-edit").val("").change();
@@ -363,6 +465,7 @@ $("#btn-edita-usr").on("click", function(e){
         nome: $("#frm-editar-usuario #user-nome-edit").val(),
         email:  $("#frm-editar-usuario #user-email-edit").val(),
         perfil: $("#frm-editar-usuario #user-perfil-edit").val(),
+        empresa: $("#frm-editar-usuario #user-empresa-edit").val(),
         supervisor: $("#frm-editar-usuario #user-supervisor-edit").val(),
         senha: $("#frm-editar-usuario #user-senha-edit").val(),
         ativo: function(){

@@ -26,6 +26,11 @@ class EmpresaController extends Controller
     }
 
 
+    public function deletaEmpresa(Request $request){
+        $id = $request->input('id');
+        return \App\Empresa::destroy($id);
+    }
+
     public function reativaEmpresaDeletada(Request $request){
         $id = $request->input('id');
 

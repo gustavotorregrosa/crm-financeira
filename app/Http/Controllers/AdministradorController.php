@@ -36,6 +36,7 @@ class AdministradorController extends Controller
         $usuario = \App\User::find($request->input('id'));
         $usuario->name = $request->input('nome');
         $usuario->email = $request->input('email');
+        $usuario->empresa = $request->input('empresa');
         if($request->input('senha') != ""){
             $usuario->password = \bcrypt($request->input('senha'));
         }
@@ -70,6 +71,10 @@ class AdministradorController extends Controller
         $novoUsuario->email = $request->input('email');
         $novoUsuario->password = \bcrypt($request->input('senha'));
         // $novoUsuario->active = 0;
+
+        if($request->input('empresa')){
+            $novoUsuario->empresa = $request->input('empresa');
+        }
 
         if($request->input('ativo') == true){
             $novoUsuario->active = "1";
@@ -111,20 +116,62 @@ class AdministradorController extends Controller
 
     public function ajaxUsuarios(){
         
-        $usuarios = \App\User::with(['supervisionados', 'supervisor'])->get();
+        $usuariosTemp = \App\User::with(['supervisionados', 'supervisor', 'empresa'])->get();
+        $usuarios = [];
+        foreach($usuariosTemp as $usuario){
+            $usuario->isempresacerta = true;
+            if($usuario->supervisor){
+                \Log::debug($usuario->empresa);
+                $usuarioSupervisor = \App\User::find($usuario->supervisor);
+                
+
+                if( $usuarioSupervisor->empresa != $usuario->empresa){
+                    // \Log::debug($usuario);
+                    $usuario->isempresacerta = false;
+                }
+            }
+
+            $usuarios[] = $usuario;
+        }
         $dados['data'] = $usuarios;
         return json_encode($dados);
     }
 
 
-    public function retSupervisores(){
+    public function retSupervisores(Request $request){
+        // $supervisores =  \App\User::whereHas('perfilUsuario', function($query){
+        //     $query->where('nome', 'Supervisor');
+        // })->get();
+        $empresa = $request->input('empresa');
         $supervisores =  \App\User::whereHas('perfilUsuario', function($query){
             $query->where('nome', 'Supervisor');
+        })->whereHas('empresa', function($query) use ($empresa){
+            $query->where('id', $empresa);
         })->get();
         return json_encode($supervisores);
 
 
     }
+
+
+    public function retSupervisoresAll(){
+        $supervisores =  \App\User::whereHas('perfilUsuario', function($query){
+            $query->where('nome', 'Supervisor');
+        })->get();
+  
+        return json_encode($supervisores);
+
+
+    }
+
+
+    public function retEmpresas(){
+        $empresas =  \App\Empresa::where('ativa', true)->get();
+        return json_encode($empresas);
+
+
+    }
+
 
 
     public function usuariosExluidos(){
@@ -142,7 +189,7 @@ class AdministradorController extends Controller
     public function empresasExcluidas(){
         $empresas = \App\Empresa::onlyTrashed()->get();
         $dados = [
-            'empresas' => $$empresas
+            'empresas' => $empresas
         ];
 
         return view('administrador.empresas-deletadas', $dados);
@@ -152,6 +199,7 @@ class AdministradorController extends Controller
 
     public function usuarios(){
         $perfisTemp = \App\Perfil::all();
+        $empresas = \App\Empresa::all();
         $perfis = [];
         $necessitaSupervisor = [
             'operador',
@@ -174,7 +222,8 @@ class AdministradorController extends Controller
             'supervisores' => \App\User::whereHas('perfilUsuario', function($query){
                 $query->where('nome', 'Supervisor');
             })->get(),
-            'precisaSup' => $necessitaSupervisorNum
+            'precisaSup' => $necessitaSupervisorNum,
+            'empresas' => $empresas
           
         ];
 

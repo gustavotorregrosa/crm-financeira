@@ -25,7 +25,7 @@
       <thead>
         <tr>
           <th scope="col">Nome</th>
-          <th scope="col">Email</th>
+          <th scope="col">Empresa</th>
           <th scope="col">Perfil</th>
           <th scope="col">Supervisor</th>
           <th scope="col">Ações</th>
@@ -73,6 +73,15 @@
               <option value="" selected disabled>Escolha uma opção</option>
               @foreach($perfis as $perfil)
                 <option value="{{$perfil->id}}">{{ ucfirst($perfil->nome) }}</option>
+              @endforeach
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Empresa</label>
+            <select class="form-control" id="user-empresa-edit">
+              <option value="" selected disabled>Escolha uma empresa</option>
+              @foreach($empresas as $empresa)
+                <option value="{{$empresa->id}}">{{ $empresa->nomeinterno }}</option>
               @endforeach
             </select>
           </div>
@@ -131,6 +140,15 @@
               <option value="" selected disabled>Escolha uma opção</option>
               @foreach($perfis as $perfil)
                 <option value="{{$perfil->id}}">{{ ucfirst($perfil->nome) }}</option>
+              @endforeach
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Empresa</label>
+            <select class="form-control" id="user-empresa">
+              <option value="" selected disabled>Escolha uma empresa</option>
+              @foreach($empresas as $empresa)
+                <option value="{{$empresa->id}}">{{ $empresa->nomeinterno }}</option>
               @endforeach
             </select>
           </div>
