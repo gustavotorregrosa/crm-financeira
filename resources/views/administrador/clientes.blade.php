@@ -63,7 +63,11 @@
           </div>
           <div class="form-group">
             <label for="uf-cliente">UF</label>
-            <input type="text" class="form-control" id="uf-cliente">
+            <select class="form-control" id="uf-cliente"></select>
+          </div>
+          <div class="form-group">
+            <label for="cidade-cliente">Cidade</label>
+            <select class="form-control" id="cidade-cliente"></select>
           </div>
         </div>
 

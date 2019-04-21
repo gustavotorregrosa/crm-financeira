@@ -4,49 +4,34 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class ClienteController extends Controller
+class CidadeController extends Controller
 {
+
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+       
+    }
+
+    public function pegatodas(){
+        $cidades = \App\Municipio::all('estado', 'cidade')->toArray();
+        $estados = array_column($cidades, 'estado');
+        $estados = array_unique($estados);
+        
+        $dados = [
+            'estados' => $estados,
+            'cidades' => $cidades
+        ];
+
+        return json_encode($dados);
+    }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-
-
-
-    public function criaNovo(){
-        $this->middleware('auth');
-        $this->middleware('verificaperfil:analista,operador');
-        return view('clientes.cria-novo');
-    }
-
-    public function criar(Request $request){
-        $this->middleware('auth');
-        // $this->middleware('verificaperfil:analista,operador');
-        // \Log::debug(\Auth::user());
-        $clienteNovo = new \App\Cliente;
-        $clienteNovo->nome = $request->input('nome');
-        $clienteNovo->cpf = $request->input('cpf');
-        $clienteNovo->empresa = null;
-        if(strtolower(\Auth::user()->perfilUsuario->nome) == 'administrador'){
-            $clienteNovo->empresa = $request->input('empresa');
-        }else{
-            $clienteNovo->empresa = \Auth::user()->empresa;
-        }
-        $clienteNovo->orgao = $request->input('orgao');
-        $clienteNovo->beneficio = $request->input('beneficio');
-        $clienteNovo->salario = $request->input('salario');
-        $clienteNovo->uf = $request->input('uf');
-        $clienteNovo->cidade = $request->input('cidade');
-        
-
-        $clienteNovo->saveDD();
-
-       
-        
-    }
-
-
     public function index()
     {
         //

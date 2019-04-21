@@ -59,3 +59,6 @@ Route::post('/deleta-empresa', 'EmpresaController@deletaEmpresa');
 
 Route::get('/administrador/clientes', 'AdministradorController@clientes');
 Route::post('/cria-cliente', 'ClienteController@criar');
+
+
+Route::post('/pega-cidades', 'CidadeController@pegatodas');
