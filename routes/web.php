@@ -55,3 +55,7 @@ Route::post('/cria-empresa', 'EmpresaController@criaEmpresa');
 Route::post('/edita-empresa', 'EmpresaController@editaEmpresa');
 Route::post('/reativa-empresa-deletada', 'EmpresaController@reativaEmpresaDeletada');
 Route::post('/deleta-empresa', 'EmpresaController@deletaEmpresa');
+
+
+Route::get('/administrador/clientes', 'AdministradorController@clientes');
+Route::post('/cria-cliente', 'ClienteController@criar');

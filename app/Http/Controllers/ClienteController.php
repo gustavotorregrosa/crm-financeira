@@ -20,6 +20,31 @@ class ClienteController extends Controller
         return view('clientes.cria-novo');
     }
 
+    public function criar(Request $request){
+        $this->middleware('auth');
+        // $this->middleware('verificaperfil:analista,operador');
+        // \Log::debug(\Auth::user());
+        $clienteNovo = new \App\Cliente;
+        $clienteNovo->nome = $request->input('nome');
+        $clienteNovo->cpf = $request->input('cpf');
+        $clienteNovo->empresa = null;
+        if(strtolower(\Auth::user()->perfilUsuario->nome) == 'administrador'){
+            $clienteNovo->empresa = $request->input('empresa');
+        }else{
+            $clienteNovo->empresa = \Auth::user()->empresa;
+        }
+        $clienteNovo->orgao = $request->input('orgao');
+        $clienteNovo->beneficio = $request->input('beneficio');
+        $clienteNovo->salario = $request->input('salario');
+        
+
+        $clienteNovo->saveDD();
+
+       
+        
+    }
+
+
     public function index()
     {
         //

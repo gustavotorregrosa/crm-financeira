@@ -24,6 +24,17 @@ class AdministradorController extends Controller
     }
 
 
+    public function clientes()
+    {
+        
+        $empresas =  \App\Empresa::where('ativa', true)->get();
+        $dados = [
+            'empresas' => $empresas
+        ];
+        return view('administrador.clientes', $dados);
+    }
+
+
   
 
 
