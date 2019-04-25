@@ -14,12 +14,46 @@ class ClienteController extends Controller
 
 
 
-    public function criaNovo(){
-        $this->middleware('auth');
-        $this->middleware('verificaperfil:analista,operador');
-        return view('clientes.cria-novo');
+    public function ajaxClientes(){
+        
+        $clientes = \App\Cliente::all();
+        $dados['data'] = $clientes;
+        return json_encode($dados);
     }
 
+    // public function criaNovo(){
+    //     $this->middleware('auth');
+    //     $this->middleware('verificaperfil:analista,operador');
+    //     return view('clientes.cria-novo');
+    // }
+
+    public function modificar(Request $request){
+        $this->middleware('auth');
+        $cliente = \App\Cliente::find($request->input('id'));
+        $usuario = \Auth::user();
+        $isAutorizado = false;
+        if((strtolower($usuario->perfilUsuario->nome) == "administrador") || ($cliente->empresa == $usuario->empresa)){
+            $isAutorizado = true;
+        }
+        $cliente->nome = $request->input('nome');
+        $cliente->cpf = $request->input('cpf');
+        if(strtolower(\Auth::user()->perfilUsuario->nome) == 'administrador'){
+            $cliente->empresa = $request->input('empresa');
+        }
+        $cliente->orgao = $request->input('orgao');
+        $cliente->beneficio = $request->input('beneficio');
+        $cliente->salario = $request->input('salario');
+        $cliente->uf = $request->input('uf');
+        $cliente->cidade = $request->input('cidade');
+        $cliente->saveDD();
+        $contatos = $request->input('contatos');
+
+
+
+
+    }
+
+    
     public function criar(Request $request){
         $this->middleware('auth');
         // $this->middleware('verificaperfil:analista,operador');
@@ -38,12 +72,24 @@ class ClienteController extends Controller
         $clienteNovo->salario = $request->input('salario');
         $clienteNovo->uf = $request->input('uf');
         $clienteNovo->cidade = $request->input('cidade');
-        
-
         $clienteNovo->saveDD();
+        $contatos = $request->input('contatos');
+        foreach($contatos as $contato){
+            \App\Contato::create([
+                'tipo' => $contato['tipo'],
+                'telefone' => $contato['numero'],
+                'cliente' => $clienteNovo->id
+            ]);
+        }
 
        
         
+    }
+
+
+    public function teste(){
+        $cliente = \App\Cliente::find(1);
+        dd($cliente);
     }
 
 

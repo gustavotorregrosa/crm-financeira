@@ -56,9 +56,12 @@ Route::post('/edita-empresa', 'EmpresaController@editaEmpresa');
 Route::post('/reativa-empresa-deletada', 'EmpresaController@reativaEmpresaDeletada');
 Route::post('/deleta-empresa', 'EmpresaController@deletaEmpresa');
 
-
 Route::get('/administrador/clientes', 'AdministradorController@clientes');
 Route::post('/cria-cliente', 'ClienteController@criar');
-
+Route::post('/altera-cliente', 'ClienteController@modificar');
 
 Route::post('/pega-cidades', 'CidadeController@pegatodas');
+
+Route::post('/administrador/clientesjson', 'ClienteController@ajaxClientes');
+
+Route::get('/teste', 'ClienteController@teste');

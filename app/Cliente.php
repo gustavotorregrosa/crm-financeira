@@ -9,6 +9,11 @@ class Cliente extends Model
 {
     use SoftDeletes;
     protected $table = 'cliente';
+    protected $with = [
+        'contatos',
+        'empresa'
+   
+    ];
 
     function saveDD(){
         $this->ultimo = \Auth::user()->id;
@@ -17,5 +22,13 @@ class Cliente extends Model
 
     public function ultimo(){
         return $this->belongsTo('App\User', 'ultimo');
+    }
+
+    public function empresa(){
+        return $this->belongsTo('App\Empresa', 'empresa');
+    }
+
+    public function contatos(){
+        return $this->hasMany('App\Contato', 'cliente');
     }
 }

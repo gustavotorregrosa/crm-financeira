@@ -23,7 +23,7 @@ class Criacliente extends Migration
             $table->string('beneficio')->nullable();
             $table->string('uf')->nullable();
             $table->string('cidade')->nullable();
-            $table->decimal('salario')->nullable();
+            $table->double('salario')->nullable();
             $table->bigInteger('ultimo')->unsigned()->nullable();
             $table->foreign('ultimo')->references('id')->on('users');
             $table->timestamps();
