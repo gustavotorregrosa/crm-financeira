@@ -21,11 +21,7 @@ class ClienteController extends Controller
         return json_encode($dados);
     }
 
-    // public function criaNovo(){
-    //     $this->middleware('auth');
-    //     $this->middleware('verificaperfil:analista,operador');
-    //     return view('clientes.cria-novo');
-    // }
+
 
     public function modificar(Request $request){
         $this->middleware('auth');
@@ -48,6 +44,42 @@ class ClienteController extends Controller
         $cliente->saveDD();
         $contatos = $request->input('contatos');
 
+        $contatosPresentes = [];
+        foreach($contatos as $contatoJS){
+            $contatosPresentes[] = $contatoJS['id'];
+        }
+
+
+        foreach($cliente->contatos as $contato){
+            if(!in_array($contato->id, $contatosPresentes)){
+                \App\Contato::destroy($contato->id);
+            }
+        }
+
+
+        foreach($contatos as $contatoJS){
+            if($contatoJS['id'] != "0"){
+                $contato = \App\Contato::find($contatoJS['id']);
+                if($contato->cliente == $cliente->id){
+                    $contato->tipo = $contatoJS['tipo'];
+                    $contato->telefone = $contatoJS['numero'];
+                    $contato->save();
+    
+                }
+            }
+            if($contatoJS['id'] == "0"){
+            $contato = new \App\Contato;
+            $contato->cliente = $cliente->id;
+            $contato->tipo = $contatoJS['tipo'];
+            $contato->telefone = $contatoJS['numero'];
+                $contato->save();
+
+            }
+            
+            
+        }
+
+        return "OK";
 
 
 

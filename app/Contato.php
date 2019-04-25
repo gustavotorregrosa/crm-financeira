@@ -9,5 +9,9 @@ class Contato extends Model
     protected $table = "contato";
     protected $guarded = [];
 
+    public function cliente(){
+        return $this->belongsTo('App\Cliente', 'cliente');
+    }
+
     
 }

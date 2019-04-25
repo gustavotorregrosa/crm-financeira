@@ -16,7 +16,7 @@ $("#btn-edita-cliente").on("click", function (e) {
     $.each(elemContatos, function (index, elemContato) {
         let contato = {
             tipo: elemContato.firstChild.value,
-            id: $(elemContato).find('.id-contato').value,
+            id: $(elemContato).find('.id-contato').val(),
             numero: elemContato.lastChild.value
         };
         contatos.push(contato);
@@ -66,6 +66,16 @@ $("#btn-edita-cliente").on("click", function (e) {
 
 });
 
+$(document).on("click", "button.deleta-item-contato", function(e){
+    e.preventDefault();
+    let contatoDiv = $(this).parent().remove();
+    // console.log(contatoDiv);
+    // alert("del contato");
+
+});
+
+
+
 tbody.on("click", "button.btn-editar", function(){
     let cliente = tabelaPrincipal.row($(this).parents("tr")).data();
     console.log(cliente);
@@ -97,7 +107,7 @@ tbody.on("click", "button.btn-editar", function(){
      $("#cidade-edita-cliente").val(cliente.cidade);
      $("#quadro-edita-contatos div").remove();
      $.each(cliente.contatos, function(index, contato){
-        let contatoTemp = "<div id='contato-"+contato.id+"' class='contato form-inline'><select class='form-control'><option value='' selected disabled>Tipo contato</option><option value='celular'>Celular</option><option value='residencial'>Residencial</option><option value='comercial'>Comercial</option></select><input class='id-contato' type='hidden' value='" + contato.id + "'><input type='text' class='form-control telefone'></div>";
+        let contatoTemp = "<div id='contato-"+contato.id+"' class='contato form-inline'><select class='form-control'><option value='' selected disabled>Tipo contato</option><option value='celular'>Celular</option><option value='residencial'>Residencial</option><option value='comercial'>Comercial</option></select><input class='id-contato' type='hidden' value='" + contato.id + "'><input type='text' class='form-control telefone'>&nbsp;&nbsp;&nbsp;<button class='btn btn-danger deleta-item-contato btn-sm'>Remover</button></div>";
         
         $("#quadro-edita-contatos").append(contatoTemp);
         $("#quadro-edita-contatos #contato-"+contato.id+" select").val(contato.tipo).change();
@@ -242,9 +252,17 @@ $("#btn-am-add-cliente").on("click", function () {
 });
 
 
+$("#add-edita-contato").on("click", function (e) {
+    e.preventDefault();
+    let contatoTemp = "<div class='contato form-inline'><select class='form-control'><option value='' selected disabled>Tipo contato</option><option value='celular'>Celular</option><option value='residencial'>Residencial</option><option value='comercial'>Comercial</option></select><input class='id-contato' type='hidden' value='0'><input type='text' class='form-control telefone'>&nbsp;&nbsp;&nbsp;<button class='btn btn-danger deleta-item-contato btn-sm'>Remover</button></div>";
+        
+    $("#quadro-edita-contatos").append(contatoTemp);
+   });
+
+
 $("#add-contato").on("click", function (e) {
     e.preventDefault();
-    $("#quadro-contatos").append("<div class='contato form-inline'><select class='form-control'><option value='' selected disabled>Tipo contato</option><option value='celular'>Celular</option><option value='residencial'>Residencial</option><option value='comercial'>Comercial</option></select><input type='text' class='form-control'></div>");
+    $("#quadro-contatos").append("<div class='contato form-inline'><select class='form-control'><option value='' selected disabled>Tipo contato</option><option value='celular'>Celular</option><option value='residencial'>Residencial</option><option value='comercial'>Comercial</option></select><input type='text' class='form-control'>&nbsp;&nbsp;&nbsp;<button class='btn btn-danger deleta-item-contato btn-sm'>Remover</button></div>");
 });
 
 

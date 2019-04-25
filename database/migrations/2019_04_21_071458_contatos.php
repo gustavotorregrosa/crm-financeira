@@ -15,8 +15,8 @@ class Contatos extends Migration
     {
         Schema::create('contato', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('tipo');
-            $table->string('telefone');
+            $table->string('tipo')->nullable();
+            $table->string('telefone')->nullable();
             $table->bigInteger('cliente')->unsigned()->nullable();
             $table->foreign('cliente')->references('id')->on('cliente');
             $table->timestamps();
