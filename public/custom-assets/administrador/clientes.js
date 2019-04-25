@@ -17,7 +17,7 @@ $("#btn-edita-cliente").on("click", function (e) {
         let contato = {
             tipo: elemContato.firstChild.value,
             id: $(elemContato).find('.id-contato').val(),
-            numero: elemContato.lastChild.value
+            numero: $(elemContato).find(".telefone").val()
         };
         contatos.push(contato);
     });
@@ -262,7 +262,7 @@ $("#add-edita-contato").on("click", function (e) {
 
 $("#add-contato").on("click", function (e) {
     e.preventDefault();
-    $("#quadro-contatos").append("<div class='contato form-inline'><select class='form-control'><option value='' selected disabled>Tipo contato</option><option value='celular'>Celular</option><option value='residencial'>Residencial</option><option value='comercial'>Comercial</option></select><input type='text' class='form-control'>&nbsp;&nbsp;&nbsp;<button class='btn btn-danger deleta-item-contato btn-sm'>Remover</button></div>");
+    $("#quadro-contatos").append("<div class='contato form-inline'><select class='form-control'><option value='' selected disabled>Tipo contato</option><option value='celular'>Celular</option><option value='residencial'>Residencial</option><option value='comercial'>Comercial</option></select><input type='text' class='form-control telefone'>&nbsp;&nbsp;&nbsp;<button class='btn btn-danger deleta-item-contato btn-sm'>Remover</button></div>");
 });
 
 
@@ -273,7 +273,8 @@ $("#btn-add-cliente").on("click", function (e) {
     $.each(elemContatos, function (index, elemContato) {
         let contato = {
             tipo: elemContato.firstChild.value,
-            numero: elemContato.lastChild.value
+            numero: $(elemContato).find(".telefone").val()
+
         };
         contatos.push(contato);
     });
@@ -305,13 +306,13 @@ $("#btn-add-cliente").on("click", function (e) {
             $.notify("Cliente criado", "success");
             $('#mdl-add-cliente').modal("hide");
             $("#frm-add-cliente")[0].reset();
-            // init();
+            init();
         },
         error: function (data) {
             $.notify("Não foi possível criar o cliente", "error");
             $('#mdl-add-cliente').modal("hide");
             $("#frm-add-cliente")[0].reset();
-            // init();
+            init();
         }
 
     });
